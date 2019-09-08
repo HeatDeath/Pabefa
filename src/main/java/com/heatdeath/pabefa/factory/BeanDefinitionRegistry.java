@@ -12,6 +12,6 @@ import java.lang.reflect.Field;
 public interface BeanDefinitionRegistry {
     void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) throws Exception;
 
-    BeanDefinition getBeanDefinition(String beanName);
+//    BeanDefinition getBeanDefinition(String beanName);
 
 }

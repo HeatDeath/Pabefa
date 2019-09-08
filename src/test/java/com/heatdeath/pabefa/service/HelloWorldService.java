@@ -7,8 +7,10 @@ package com.heatdeath.pabefa.service;
  */
 public class HelloWorldService {
     private String text;
+    private RefBeanService refBeanService;
 
     public void sayHello() {
         System.out.println(text);
+        refBeanService.sayHello();
     }
 }

@@ -3,6 +3,11 @@
 
     <bean name="helloWorldService" class="com.heatdeath.pabefa.service.HelloWorldService">
         <property name="text" value="Hello World!" />
+        <property name="refBeanService" ref="refBeanService"/>
+    </bean>
+
+    <bean name="refBeanService" class="com.heatdeath.pabefa.service.RefBeanService">
+        <property name="helloWorldService" ref="helloWorldService"/>
     </bean>
 
 </beans>

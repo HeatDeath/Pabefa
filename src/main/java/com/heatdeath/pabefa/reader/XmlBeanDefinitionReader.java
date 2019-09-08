@@ -1,9 +1,11 @@
 package com.heatdeath.pabefa.reader;
 
 import com.heatdeath.pabefa.bean.BeanDefinition;
+import com.heatdeath.pabefa.bean.BeanReference;
 import com.heatdeath.pabefa.bean.PropertyValue;
 import com.heatdeath.pabefa.factory.BeanDefinitionRegistry;
 import com.heatdeath.pabefa.resource.Resource;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,7 +13,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * Author:  heatdeath
@@ -58,20 +62,27 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
         String name = ele.getAttribute("name");
         String className = ele.getAttribute("class");
         BeanDefinition beanDefinition = new BeanDefinition();
-        processProperty(ele,beanDefinition);
+        processProperty(ele, beanDefinition);
         beanDefinition.setBeanClassName(className);
         registry.registerBeanDefinition(name, beanDefinition);
     }
 
-    private void processProperty(Element ele,BeanDefinition beanDefinition) {
+    private void processProperty(Element ele, BeanDefinition beanDefinition) {
         NodeList propertyNode = ele.getElementsByTagName("property");
         for (int i = 0; i < propertyNode.getLength(); i++) {
             Node node = propertyNode.item(i);
             if (node instanceof Element) {
                 Element propertyEle = (Element) node;
+                // 字段注入
                 String name = propertyEle.getAttribute("name");
                 String value = propertyEle.getAttribute("value");
-                beanDefinition.addPropertyValue(new PropertyValue(name,value));
+                if (Objects.nonNull(value)) {
+                    beanDefinition.addPropertyValue(new PropertyValue(name, value));
+                    return;
+                }
+                // 依赖 Bean 注入
+                String ref = propertyEle.getAttribute("ref");
+                beanDefinition.addPropertyValue(new PropertyValue(name, new BeanReference(ref)));
             }
         }
     }
