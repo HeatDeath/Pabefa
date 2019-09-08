@@ -4,7 +4,6 @@ import com.heatdeath.pabefa.factory.BeanFactory;
 import com.heatdeath.pabefa.factory.ClassPathXmlBeanFactory;
 import com.heatdeath.pabefa.service.HelloWorldService;
 import com.heatdeath.pabefa.service.RefBeanService;
-
 import org.junit.Test;
 
 /**

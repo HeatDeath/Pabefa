@@ -5,7 +5,7 @@ import com.heatdeath.pabefa.bean.BeanReference;
 import com.heatdeath.pabefa.bean.PropertyValue;
 import com.heatdeath.pabefa.factory.BeanDefinitionRegistry;
 import com.heatdeath.pabefa.resource.Resource;
-
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,9 +13,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import java.io.InputStream;
-import java.util.Objects;
 
 /**
  * Author:  heatdeath
@@ -76,9 +74,9 @@ public class XmlBeanDefinitionReader implements BeanDefinitionReader {
                 // 字段注入
                 String name = propertyEle.getAttribute("name");
                 String value = propertyEle.getAttribute("value");
-                if (Objects.nonNull(value)) {
+                if (!StringUtils.isEmpty(value)) {
                     beanDefinition.addPropertyValue(new PropertyValue(name, value));
-                    return;
+                    continue;
                 }
                 // 依赖 Bean 注入
                 String ref = propertyEle.getAttribute("ref");
