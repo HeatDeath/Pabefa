@@ -15,8 +15,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class BeanDefinition {
-    private Object bean;
-
     private String beanClassName;
 
     private Class beanClazz;

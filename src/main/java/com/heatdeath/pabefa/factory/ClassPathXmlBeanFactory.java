@@ -65,6 +65,8 @@ public class ClassPathXmlBeanFactory implements BeanFactory, BeanDefinitionRegis
                 Object bean = earlySingletonObjects.containsKey(key) ? earlySingletonObjects.get(key)
                         : doCreateBean(beanDefinition);
                 applyPropertyValues(bean, beanDefinition);
+                singletonFactories.remove(key);
+                earlySingletonObjects.remove(key);
                 singletonObjects.put(key, bean);
             } catch (Exception e) {
                 e.printStackTrace();
